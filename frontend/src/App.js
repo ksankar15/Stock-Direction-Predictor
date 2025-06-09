@@ -14,7 +14,7 @@ function App() {
     setProbability(null);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:5000/predict?ticker=${finalTicker}`);
+      const response = await fetch(`https://stock-direction-predictor.onrender.com/predict?ticker=${finalTicker}`);
       if (response.status === 404) {
         setError("Ticker not found");
         return;
@@ -46,7 +46,7 @@ function App() {
   };
 
   const chartUrl = selectedPeriod && ticker
-    ? `http://localhost:5000/create-chart?ticker=${ticker}&period=${selectedPeriod}`
+    ? `https://stock-direction-predictor.onrender.com/create-chart?ticker=${ticker}&period=${selectedPeriod}`
     : null;
 
   
