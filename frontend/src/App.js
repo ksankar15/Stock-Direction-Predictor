@@ -8,11 +8,13 @@ function App() {
   const [probability, setProbability] = useState(null)
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handlePredict = async (finalTicker) => {
     setPrediction(null);
     setProbability(null);
     setError(null);
+    setLoading(true);
     try {
       const response = await fetch(`https://stock-direction-predictor.onrender.com/predict?ticker=${finalTicker}`);
       if (response.status === 404) {
@@ -20,6 +22,7 @@ function App() {
         return;
       }
       const data = await response.json();
+      setLoading(false);
       if ("Prediction" in data) {
         setTicker(finalTicker);
         setPrediction(data["Prediction"]);
@@ -61,6 +64,8 @@ function App() {
           placeholder="Enter stock ticker (e.g., AAPL)"
         />
       </form>
+
+      {loading && <div className="loader"></div>}
 
       {prediction != null && (
         <>
